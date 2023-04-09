@@ -2,57 +2,60 @@ import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialPosts = {
-    posts: [
-        {
-            id: uuidv4(),
-            postText: "Humaira Akila Nishat...",
-            likeCount: 0,
-            disabled: false,
-            comments: [
-                {
-                    postId: 1,
-                    commentId: 1,
-                    commentText: "first comment here",
-                    reply: [
-                        {
-                            postId: 1,
-                            commentId: 1,
-                            replyId: 1,
-                            replyText: "first comment replied here",
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            postText: "Lorem Ipsum is simply dummy text of the printing, Lorem Ipsum is simply dummy text of the printing,",
-            likeCount: 0,
-            disabled: false,
-            comments: [
-                {
-                    postId: 2,
-                    commentId: 2,
-                    commentText: "second comment here",
-                    reply: [
-                        {
-                            postId: 2,
-                            commentId: 2,
-                            replyId: 2,
-                            replyText: "second comment replied here",
-                        }
-                    ]
-                }
-            ]
-        },
-    ],
+    // posts: [
+    //     {
+    //         id: uuidv4(),
+    //         postText: "Humaira Akila Nishat...",
+    //         likeCount: 0,
+    //         disabled: false,
+    //         comments: [
+    //             {
+    //                 postId: 1,
+    //                 commentId: 1,
+    //                 commentText: "first comment here",
+    //                 reply: [
+    //                     {
+    //                         postId: 1,
+    //                         commentId: 1,
+    //                         replyId: 1,
+    //                         replyText: "first comment replied here",
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         postText: "Lorem Ipsum is simply dummy text of the printing, Lorem Ipsum is simply dummy text of the printing,",
+    //         likeCount: 0,
+    //         disabled: false,
+    //         comments: [
+    //             {
+    //                 postId: 2,
+    //                 commentId: 2,
+    //                 commentText: "second comment here",
+    //                 reply: [
+    //                     {
+    //                         postId: 2,
+    //                         commentId: 2,
+    //                         replyId: 2,
+    //                         replyText: "second comment replied here",
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     },
+    // ],
 };
 
 export const postSlice = createSlice({
     name: "posts",
     initialState: initialPosts,
     reducers: {
-        showPosts: (state) => state,
+        // showPosts: (state) => state,
+        showPosts: (state, action) => {
+            state.posts=action.payload
+        },
         addPosts: (state, action) => {
             state.posts.unshift(action.payload)
         },
@@ -98,7 +101,7 @@ export const postSlice = createSlice({
         },
         addReply: (state, action) => {
             const { postId, commentId, replyId, replyText } = action.payload;
-                
+
             // const { postId, commentId, replyId, replyText } = action.payload;
             // const isPostExist = state.posts.filter((post) => post.id == commentId);
 

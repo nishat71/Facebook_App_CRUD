@@ -15,22 +15,23 @@ const AddSingleReply = (props) => {
 
     const handleReplySubmit = (e) => {
         e.preventDefault();
-        const replyInfo = { replyId:uuidv4(), replyText: SingleReply }
-        dispatch(addReply(replyInfo));
-        setSingleReply("");
-        // fetch('http://localhost:3333/replies', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         comment_id: commentId,
-        //         reply_text: SingleReply
-        //     }),
-        //     headers: {
-        //         'Content-type': 'application/json; charset=UTF-8',
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((json) => console.log(json));
-        //     setSingleReply("")
+        // const replyInfo = { replyId:uuidv4(), replyText: SingleReply }
+        // dispatch(addReply(replyInfo));
+        // setSingleReply("");
+
+        fetch('http://localhost:3333/replies', {
+            method: 'POST',
+            body: JSON.stringify({
+                // comment_id: commentId,
+                reply_text: SingleReply
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+            setSingleReply("")
     }
 
     return (

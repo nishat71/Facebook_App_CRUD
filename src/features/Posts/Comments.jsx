@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SingleComment from './SingleComment';
 import { useDispatch } from 'react-redux';
-import { addComment } from './PostSlice';
+import { addComment, showPosts } from './PostSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -16,13 +16,13 @@ const Comments = (props) => {
     const isCommentTextDisabled = comments.length === 0;
 
 
-    const handleCommentSubmit = (e) => {
+
+    const handleCommentSubmit = async (e) => {
         e.preventDefault();
         // const commentDetails = { commentId: uuidv4(), postId: postId, commentText: comments }
         // dispatch(addComment(commentDetails));
         // setComments("");
-
-        fetch('http://localhost:3333/comments', {
+        const commentPost = await fetch('http://localhost:3333/comments', {
             method: 'POST',
             body: JSON.stringify({
                 post_id: postId,
@@ -32,11 +32,14 @@ const Comments = (props) => {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
-            .then((response) => response.json())
-            .then((json) => console.log(json));
-        setComments("")
 
+        const response = await fetch('http://localhost:3333/posts')
+        const data = await response.json();
+        dispatch(showPosts(data))
+        setComments("")
     }
+
+    
     return (
         <div>
             <div className='comment_section'>
@@ -50,7 +53,7 @@ const Comments = (props) => {
                 <div className='comment-show'>
                     {
                         // comment.map((singleCmnt) => <SingleComment singleCmnt={singleCmnt} key={singleCmnt.commentId}></SingleComment>)
-                        comment.map((singleCmnt,index) => <SingleComment singleCmnt={singleCmnt} key={index}></SingleComment>)
+                        comment.map((singleCmnt, index) => <SingleComment singleCmnt={singleCmnt} key={index}></SingleComment>)
                     }
 
                 </div>

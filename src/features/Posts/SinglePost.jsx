@@ -15,9 +15,9 @@ const SinglePost = ({ post }) => {
 
 
     const [like, setLike] = useState(likes.length > 0 ? likes[0].total_like : 0);
-    console.log(like);
+    // console.log(like);
     const [isDisabled, setIsDisabled] = useState(disabled);
-    console.log(isDisabled);
+    // console.log(isDisabled);
     const dispatch = useDispatch();
 
 

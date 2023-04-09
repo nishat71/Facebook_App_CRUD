@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux';
-import { deletePosts, updatePosts } from './PostSlice';
+import { deletePosts, showPosts, updatePosts } from './PostSlice';
 
 const EditPost = (props) => {
     const { id, post_text } = props.post
@@ -19,11 +19,12 @@ const EditPost = (props) => {
         setIsModalOpen(true);
     };
 
-    const handleOk = (e) => {
+
+    const handleOk = async (e) => {
         e.preventDefault();
         // dispatch(updatePosts({ id, postText: editPost }));
 
-        fetch(`http://localhost:3333/posts/${id}`, {
+        const postEdit = await fetch(`http://localhost:3333/posts/${id}`, {
             method: 'POST',
             body: JSON.stringify({
                 post_text: editPost,
@@ -32,28 +33,38 @@ const EditPost = (props) => {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
-            .then((response) => response.json())
-            .then((json) => console.log(json));
+
+
+        const response = await fetch('http://localhost:3333/posts')
+        const data = await response.json();
+        dispatch(showPosts(data))
         setIsModalOpen(false);
     };
+
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
 
-    const handleDeletePost = (id) => {
+
+
+    const handleDeletePost = async (id) => {
         if (window.confirm('Are you sure that you want to delete??')) {
             // dispatch(deletePosts(id));
-
-            fetch(`http://localhost:3333/posts/${id}`, {
+            const deletePost = await fetch(`http://localhost:3333/posts/${id}`, {
                 method: 'DELETE',
             })
+
+            const response = await fetch('http://localhost:3333/posts')
+            const data = await response.json();
+            dispatch(showPosts(data))
+
+            // Swal.fire(
+            //     'You clicked the button!',
+            //     'Successfully Deleted!'
+            // )
         }
-        // Swal.fire(
-        //     'You clicked the button!',
-        //     'Successfully Deleted!'
-        // )
     }
 
 

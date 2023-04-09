@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SinglePost from './SinglePost';
+import { showPosts } from './PostSlice';
 
 
 const PostView = () => {
-    // const posts = useSelector(state => state.postReducer.posts)
-    // console.log(posts);
+    const posts = useSelector(state => state.postReducer.posts)
+    console.log(posts);
+    const dispatch = useDispatch();
 
-    const [posts, setPosts] = useState('');
+    // const [posts, setPosts] = useState('');
+    // useEffect(() => {
+    //     fetch('http://localhost:3333/posts')
+    //         .then((res) => res.json())
+    //         .then((data) => setPosts(data))
+    // }, []);
+
+    // useEffect(() => {
+
+    
     useEffect(() => {
-        fetch('http://localhost:3333/posts')
-            .then((res) => res.json())
-            .then((data) => setPosts(data))
-    }, []);
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:3333/posts')
+            const data = await response.json();
+            dispatch(showPosts(data))
+        }
+        fetchData()
+    }, [])
+
 
 
     return (

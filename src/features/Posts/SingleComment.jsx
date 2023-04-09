@@ -6,7 +6,7 @@ import AddSingleReply from './AddSingleReply';
 
 
 const SingleComment = ({ singleCmnt }) => {
-    const { commentId, comment_text, postId, reply } = singleCmnt;
+    const {id, commentId, comment_text, post_id, reply } = singleCmnt;
     // console.log(singleCmnt)
     // console.log(reply);
 
@@ -40,7 +40,7 @@ const SingleComment = ({ singleCmnt }) => {
                 </div>
                 {/* comment-reply */}
                 {
-                    isReplying && <AddSingleReply addReply={reply} />
+                    isReplying && <AddSingleReply addReply={reply} post_id={post_id} comment_id={id}/>
                 }
             </div>
         </div>
